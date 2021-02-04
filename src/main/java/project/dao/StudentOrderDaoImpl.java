@@ -5,7 +5,6 @@ import project.domain.*;
 import project.exception.DaoException;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -77,13 +76,9 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
                 "INNER JOIN jc_register_office ro_c ON ro.r_office_id = soc.c_register_office_id " +
                 "WHERE student_order_status = ? ORDER BY so.student_order_id LIMIT ?";
 
-    // TODO refactoring - make one method
+
     private Connection getConnection() throws SQLException {
-        Connection con = DriverManager.getConnection(
-                Config.getProperty(Config.DB_URL),
-                Config.getProperty(Config.DB_LOGIN),
-                Config.getProperty(Config.DB_PASSWORD));
-        return con;
+        return ConnectionBuilder.getConnection();
     }
 
     @Override
